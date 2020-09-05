@@ -1,8 +1,6 @@
-use crate::{
-    scheduler::Scheduler
-};
-use actix_web::{get, App, HttpServer, HttpResponse, Result};
+use crate::scheduler::Scheduler;
 use actix::prelude::*;
+use actix_web::{get, App, HttpResponse, HttpServer, Result};
 
 mod scheduler;
 
@@ -13,7 +11,6 @@ pub async fn health() -> Result<HttpResponse> {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-
     // Start Scheduler
     Scheduler.start();
 

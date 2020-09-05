@@ -1,7 +1,7 @@
-
 use actix::prelude::*;
-use std::{time::Duration};
-
+use chrono::Local;
+use cron::Schedule;
+use std::{str::FromStr, time::Duration};
 
 // Define actor
 pub struct Scheduler;
@@ -11,20 +11,34 @@ impl Actor for Scheduler {
     type Context = Context<Self>;
 
     fn started(&mut self, ctx: &mut Context<Self>) {
-       println!("Actor is alive");
-       let five_second_ms = 5000;
+        println!("Actor is alive");
 
-        // executes every 5 seconds
-        ctx.run_interval(
-            Duration::from_millis(five_second_ms),
-            move |_this, _ctx| {
-                println!("run_interval event");
-            },
-        );
+        ctx.run_later(duration_until_next(), move |this, ctx| {
+            this.schedule_task(ctx)
+        });
     }
 
     fn stopped(&mut self, _ctx: &mut Context<Self>) {
-       println!("Actor is stopped");
+        println!("Actor is stopped");
     }
+}
 
+impl Scheduler {
+    fn schedule_task(&self, ctx: &mut Context<Self>) {
+        // executes every 1 minute based on cron schedule
+        println!("schedule_task event - {:?}", Local::now());
+
+        ctx.run_later(duration_until_next(), move |this, ctx| {
+            this.schedule_task(ctx)
+        });
+    }
+}
+
+pub fn duration_until_next() -> Duration {
+    let cron_expression = "0 * * * * * *"; //every minute
+    let cron_schedule = Schedule::from_str(cron_expression).unwrap();
+    let now = Local::now();
+    let next = cron_schedule.upcoming(Local).next().unwrap();
+    let duration_until = next.signed_duration_since(now);
+    Duration::from_millis(duration_until.num_milliseconds() as u64)
 }

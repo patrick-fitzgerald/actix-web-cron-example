@@ -4,8 +4,6 @@ version = "0.1.0"
 authors = ["Patrick Fitzgerald <paddyfitz@gmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 
 # actix
@@ -14,5 +12,8 @@ actix-web-actors = "^2.0"
 actix-web = "2.0.0"
 actix-rt = "1.1.1"
 
-serde = { version = "^1.0", features = ["derive"] }
-serde_json = "^1.0"
+# Date and time library for Rust
+chrono = { version = "^0.4" }
+
+# A cron expression parser and schedule explorer.
+cron = "0.6.1"
