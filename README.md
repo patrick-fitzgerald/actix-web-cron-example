@@ -6,8 +6,6 @@ An example actix-web project with a simple cron job making use of the Actix Acto
 
 ## Examples 
 
-Executes a closure every 10 seconds using: [Actix run_interval](https://actix.rs/actix/actix/prelude/trait.AsyncContext.html#method.run_interval)
-
 Parses a cron schedule and executes a closure when it is due next using: [Actix run_later](https://actix.rs/actix/actix/prelude/trait.AsyncContext.html#method.run_later)
 
 
