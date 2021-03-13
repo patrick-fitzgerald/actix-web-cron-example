@@ -40,5 +40,5 @@ pub fn duration_until_next() -> Duration {
     let now = Local::now();
     let next = cron_schedule.upcoming(Local).next().unwrap();
     let duration_until = next.signed_duration_since(now);
-    Duration::from_millis(duration_until.num_milliseconds() as u64)
+    duration_until.to_std().unwrap()
 }
