@@ -7,13 +7,13 @@ edition = "2018"
 [dependencies]
 
 # actix
-actix = "^0.9"
-actix-web-actors = "^2.0"
-actix-web = "2.0.0"
-actix-rt = "1.1.1"
+actix = "0.13.0"
+actix-web-actors = "4.1.0"
+actix-web = "4.2.1"
+actix-rt = "2.7.0"
 
 # Date and time library for Rust
-chrono = { version = "^0.4" }
+chrono = "0.4.22"
 
-# A cron expression parser and schedule explorer.
-cron = "0.6.1"
+# tokio = { version = "1.21.1", features = ["full"] }
+tokio_schedule = "0.3.0"

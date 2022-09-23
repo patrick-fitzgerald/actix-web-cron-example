@@ -1,5 +1,4 @@
-use crate::scheduler::Scheduler;
-use actix::prelude::*;
+use crate::scheduler::start_scheduler;
 use actix_web::{get, App, HttpResponse, HttpServer, Result};
 
 mod scheduler;
@@ -9,10 +8,12 @@ pub async fn health() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().body("success".to_string()))
 }
 
-#[actix_rt::main]
+#[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    // Start Scheduler
-    Scheduler.start();
+    // Start scheduler on a new thread
+    actix_rt::spawn(async move {
+        start_scheduler().await;
+    });
 
     // Start Web server
     HttpServer::new(|| App::new().service(health))
